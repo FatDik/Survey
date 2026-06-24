@@ -329,11 +329,11 @@
 
   <div class="stats">
     <div class="stat-card">
-      <div class="stat-num">10</div>
+      <div class="stat-num">20</div>
       <div class="stat-lbl">Pertanyaan penilaian</div>
     </div>
     <div class="stat-card">
-      <div class="stat-num">&lt;2'</div>
+      <div class="stat-num">&lt;5'</div>
       <div class="stat-lbl">Waktu pengisian</div>
     </div>
     <div class="stat-card">
@@ -427,7 +427,7 @@ const LABEL_SKALA = [
 /* ======================================================= */
 
 const N = PERTANYAAN.length;
-const TOTAL = N + 2;
+const TOTAL = N + 1;
 const ans = new Array(N).fill(null);
 let cur = 0;
 let identitas = {nama:"",email:""};
@@ -508,7 +508,7 @@ function renderQ(i){
   setBar(`
     <button class="btn-back" onclick="goBack(${i})" aria-label="Kembali"><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
     <button class="btn-next" onclick="goNext(${i})">
-      ${i<N-1?'Lanjut <i class="ti ti-arrow-right" aria-hidden="true"></i>':'Ke masukan <i class="ti ti-arrow-right" aria-hidden="true"></i>'}
+      ${i<N-1?'Lanjut <i class="ti ti-arrow-right" aria-hidden="true"></i>':'Kirim Survey <i class="ti ti-send" aria-hidden="true"></i>'}
     </button>`);
 }
 
@@ -520,39 +520,25 @@ function pick(i,v){
 function goNext(i){
   if(ans[i]===null){document.getElementById('err-q').style.display='block';return;}
   cur++;
-  if(i<N-1)renderQ(i+1);else renderSaran();
+  if(i<N-1)renderQ(i+1);else submitSurvey();
 }
 function goBack(i){
   cur--;
   if(i===0)renderIdentitas();else renderQ(i-1);
 }
 
-/* Saran */
-function renderSaran(){
-  updateBar('Langkah terakhir — kritik & saran');
-  document.getElementById('s-main').innerHTML=`
-    <div class="panel">
-      <div class="step-row"><span class="step-pill">Terakhir</span><span class="step-info">kritik &amp; saran</span></div>
-      <div class="q-accent">+</div>
-      <div class="q-text">Kritik dan saran untuk ${NAMA_ORGANISASI}?</div>
-      <textarea id="saran" placeholder="Tulis kritik dan saran kamu untuk organisasi (opsional)..."></textarea>
-    </div>`;
-  window.scrollTo({top:0,behavior:'smooth'});
-  setBar(`
-    <button class="btn-back" onclick="backToLastQ()" aria-label="Kembali"><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
-    <button class="btn-submit" onclick="submitSurvey()">Kirim Survey <i class="ti ti-send" aria-hidden="true"></i></button>`);
-}
-function backToLastQ(){cur--;renderQ(N-1)}
 
 /* Submit */
 async function submitSurvey(){
-  const saran=document.getElementById('saran').value.trim();
+  const saran="";
   const total=ans.reduce((a,b)=>a+b,0);
-  const avg=total/N;
+  const avg=total/N*20;
   let ket='',col='';
-  if(avg>=4.5){ket='Sangat Baik';col='#0F6E56';}
-  else if(avg>=3.5){ket='Baik';col='#3B6D11';}
-  else if(avg>=2.5){ket='Cukup';col='#854F0B';}
+  if(avg>=81){ket='Sangat Agile';col='#0F6E56';}
+  else if(avg>=61){ket='Agile';col='#3B6D11';}
+  else if(avg>=41){ket='Cukup Agile';col='#854F0B';}
+  else if(avg>=21){ket='Kurang Agile'}
+  else if(avg>=0){ket='Tidak Agile'}
   else{ket='Perlu Perhatian';col='#A32D2D';}
 
   const payload={nama:identitas.nama,email:identitas.email};
@@ -579,7 +565,7 @@ async function submitSurvey(){
     <div class="panel result-wrap">
       <div class="result-icon"><i class="ti ti-circle-check" aria-hidden="true"></i></div>
       <div class="result-title">Survey terkirim!</div>
-      <div class="result-sub">Terima kasih, ${identitas.nama}.<br>Masukanmu sangat berarti untuk ${NAMA_ORGANISASI}.</div>
+      <div class="result-sub">Terima kasih, ${identitas.nama}.</div>
       <div>${ok
         ?'<span class="badge-ok"><i class="ti ti-database" aria-hidden="true"></i> Tersimpan ke Google Sheets</span>'
         :'<span class="badge-err"><i class="ti ti-alert-triangle" aria-hidden="true"></i> Gagal simpan — cek URL Apps Script</span>'
