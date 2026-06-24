@@ -1,338 +1,493 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
   <title>Survey Kepuasan Organisasi</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/tabler-icons.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/tabler-icons.min.css"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --purple-50:  #EEEDFE;
-      --purple-100: #CECBF6;
-      --purple-200: #AFA9EC;
-      --purple-400: #7F77DD;
-      --purple-600: #534AB7;
-      --purple-800: #3C3489;
-      --purple-900: #26215C;
-      --gray-50:  #F1EFE8;
-      --gray-100: #D3D1C7;
-      --gray-400: #888780;
-      --gray-600: #5F5E5A;
-      --green-50:  #EAF3DE;
-      --green-800: #27500A;
-      --amber-50:  #FAEEDA;
-      --amber-800: #633806;
-      --red-50:    #FCEBEB;
-      --red-800:   #791F1F;
-      --teal-50:   #E1F5EE;
-      --teal-800:  #085041;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --p50:#EEEDFE;--p100:#CECBF6;--p200:#AFA9EC;--p400:#7F77DD;
+      --p600:#534AB7;--p800:#3C3489;--p900:#26215C;
+      --g50:#F1EFE8;--g100:#D3D1C7;--g400:#888780;--g600:#5F5E5A;
+      --t50:#E1F5EE;--t600:#0F6E56;--t800:#085041;
+      --a50:#FAEEDA;--a800:#633806;
+      --r50:#FCEBEB;--r800:#791F1F;
+    }
+    html{scroll-behavior:smooth}
+    body{
+      font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+      background:#f8f7ff;
+      min-height:100vh;
+      color:#1a1a2e;
     }
 
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: #f5f4ff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      color: #1a1a2e;
+    /* ── NAVBAR ── */
+    nav{
+      position:sticky;top:0;z-index:100;
+      background:rgba(248,247,255,0.92);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--p50);
+      padding:0 24px;
+      display:flex;align-items:center;justify-content:space-between;
+      height:56px;
+    }
+    .nav-brand{display:flex;align-items:center;gap:10px}
+    .nav-logo{
+      width:32px;height:32px;border-radius:8px;
+      background:var(--p600);
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;font-size:16px;
+    }
+    .nav-name{font-size:15px;font-weight:500;color:var(--p800)}
+    .nav-btn{
+      font-size:13px;font-weight:500;color:var(--p600);
+      background:var(--p50);border:none;
+      padding:7px 16px;border-radius:20px;
+      cursor:pointer;transition:background 0.15s;
+    }
+    .nav-btn:hover{background:var(--p100)}
+
+    /* ── HERO ── */
+    .hero{
+      padding:56px 24px 48px;
+      text-align:center;
+      max-width:480px;margin:0 auto;
+    }
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      font-size:12px;font-weight:500;
+      color:var(--p800);background:var(--p50);
+      padding:5px 14px;border-radius:20px;
+      margin-bottom:20px;
+    }
+    .hero h1{
+      font-size:clamp(24px,6vw,32px);
+      font-weight:500;
+      line-height:1.25;
+      color:#1a1a2e;
+      margin-bottom:14px;
+    }
+    .hero h1 span{color:var(--p600)}
+    .hero p{
+      font-size:15px;color:var(--g600);
+      line-height:1.7;margin-bottom:32px;
+    }
+    .hero-cta{
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--p600);color:#fff;
+      font-size:15px;font-weight:500;
+      padding:13px 28px;border-radius:12px;
+      border:none;cursor:pointer;
+      transition:background 0.15s,transform 0.1s;
+    }
+    .hero-cta:hover{background:var(--p800)}
+    .hero-cta:active{transform:scale(0.97)}
+
+    /* ── STATS ── */
+    .stats{
+      display:grid;grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      max-width:480px;margin:0 auto 48px;
+      padding:0 24px;
+    }
+    .stat-card{
+      background:#fff;border:1px solid var(--p50);
+      border-radius:12px;padding:16px 10px;text-align:center;
+    }
+    .stat-num{font-size:22px;font-weight:500;color:var(--p600);margin-bottom:4px}
+    .stat-lbl{font-size:11px;color:var(--g400);line-height:1.3}
+
+    /* ── FEATURES ── */
+    .features{
+      max-width:480px;margin:0 auto 56px;
+      padding:0 24px;
+    }
+    .features h2{font-size:18px;font-weight:500;color:#1a1a2e;margin-bottom:20px;text-align:center}
+    .feat-list{display:flex;flex-direction:column;gap:12px}
+    .feat-card{
+      background:#fff;border:1px solid var(--p50);
+      border-radius:12px;padding:16px;
+      display:flex;align-items:flex-start;gap:14px;
+    }
+    .feat-icon{
+      width:36px;height:36px;border-radius:10px;
+      background:var(--p50);
+      display:flex;align-items:center;justify-content:center;
+      font-size:18px;color:var(--p600);flex-shrink:0;
+    }
+    .feat-body h3{font-size:14px;font-weight:500;color:#1a1a2e;margin-bottom:3px}
+    .feat-body p{font-size:13px;color:var(--g400);line-height:1.5}
+
+    /* ── FOOTER ── */
+    footer{
+      text-align:center;padding:24px;
+      font-size:12px;color:var(--g400);
+      border-top:1px solid var(--p50);
     }
 
-    /* ── Top bar ── */
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: #fff;
-      border-bottom: 0.5px solid var(--gray-100);
-      padding: 12px 20px 10px;
+    /* ══════════════════════════════════════
+       SURVEY APP
+    ══════════════════════════════════════ */
+    #survey-app{display:none;min-height:100vh;flex-direction:column}
+    #survey-app.active{display:flex}
+    #landing{transition:opacity 0.3s}
+
+    /* Top bar */
+    .s-topbar{
+      position:sticky;top:0;z-index:10;
+      background:rgba(248,247,255,0.95);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--p50);
+      padding:12px 20px 10px;
     }
-    .topbar-title {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--purple-800);
-      margin-bottom: 8px;
+    .s-topbar-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+    .s-topbar-title{font-size:14px;font-weight:500;color:var(--p800)}
+    .s-close{
+      width:32px;height:32px;border-radius:8px;border:1px solid var(--g100);
+      background:#fff;display:flex;align-items:center;justify-content:center;
+      font-size:16px;color:var(--g600);cursor:pointer;
     }
-    .progress-wrap { height: 3px; background: var(--purple-50); border-radius: 2px; }
-    .progress-fill { height: 3px; background: var(--purple-600); border-radius: 2px; transition: width 0.4s ease; }
-    .progress-label { font-size: 11px; color: var(--gray-400); margin-top: 5px; }
+    .s-close:hover{background:var(--g50)}
+    .prog-wrap{height:3px;background:var(--p50);border-radius:2px}
+    .prog-fill{height:3px;background:var(--p600);border-radius:2px;transition:width 0.4s ease}
+    .prog-lbl{font-size:11px;color:var(--g400);margin-top:5px}
 
-    /* ── Main content ── */
-    .main { flex: 1; padding: 24px 20px 100px; }
+    /* Main */
+    .s-main{flex:1;padding:24px 20px 100px;max-width:520px;margin:0 auto;width:100%}
 
-    /* ── Panel animation ── */
-    .panel { animation: up 0.22s ease; }
-    @keyframes up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    /* Panel animation */
+    .panel{animation:up 0.22s ease}
+    @keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-    /* ── Question ── */
-    .q-accent { font-size: 48px; font-weight: 700; color: var(--purple-100); line-height: 1; margin-bottom: 6px; }
-    .q-text { font-size: 17px; line-height: 1.55; color: #1a1a2e; margin-bottom: 28px; }
+    .q-accent{font-size:48px;font-weight:500;color:var(--p100);line-height:1;margin-bottom:6px}
+    .q-text{font-size:17px;line-height:1.55;color:#1a1a2e;margin-bottom:28px}
 
-    /* ── Likert — vertical on mobile ── */
-    .likert-col { display: flex; flex-direction: column; gap: 10px; }
-    .likert-opt {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px 16px;
-      border: 1px solid var(--gray-100);
-      border-radius: 12px;
-      cursor: pointer;
-      background: #fff;
-      transition: all 0.14s;
-      -webkit-tap-highlight-color: transparent;
+    /* Likert vertical */
+    .likert-col{display:flex;flex-direction:column;gap:10px}
+    .likert-opt{
+      display:flex;align-items:center;gap:14px;
+      padding:14px 16px;
+      border:1px solid var(--g100);border-radius:12px;
+      cursor:pointer;background:#fff;
+      transition:all 0.14s;
+      -webkit-tap-highlight-color:transparent;
     }
-    .likert-opt:active { transform: scale(0.98); }
-    .likert-opt .num {
-      width: 32px; height: 32px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 15px; font-weight: 500;
-      background: var(--purple-50); color: var(--purple-600);
-      flex-shrink: 0; transition: all 0.14s;
+    .likert-opt:active{transform:scale(0.98)}
+    .likert-opt .num{
+      width:32px;height:32px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-size:15px;font-weight:500;
+      background:var(--p50);color:var(--p600);
+      flex-shrink:0;transition:all 0.14s;
     }
-    .likert-opt .lbl { font-size: 14px; color: #555; transition: color 0.14s; }
-    .likert-opt.sel { background: var(--purple-600); border-color: var(--purple-600); }
-    .likert-opt.sel .num { background: rgba(255,255,255,0.25); color: #fff; }
-    .likert-opt.sel .lbl { color: #fff; font-weight: 500; }
+    .likert-opt .lbl{font-size:14px;color:#555;transition:color 0.14s}
+    .likert-opt.sel{background:var(--p600);border-color:var(--p600)}
+    .likert-opt.sel .num{background:rgba(255,255,255,0.2);color:#fff}
+    .likert-opt.sel .lbl{color:#fff;font-weight:500}
 
-    /* ── Error ── */
-    .err { font-size: 13px; color: #A32D2D; margin-top: 12px; display: none; }
-
-    /* ── Bottom nav bar ── */
-    .bottom-bar {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: #fff;
-      border-top: 0.5px solid var(--gray-100);
-      padding: 12px 20px;
-      display: flex;
-      gap: 10px;
+    /* Fields */
+    .field{margin-bottom:18px}
+    .field label{
+      display:block;font-size:12px;font-weight:500;
+      color:var(--p600);letter-spacing:0.06em;
+      text-transform:uppercase;margin-bottom:7px;
     }
-    .btn-back {
-      flex: 0 0 auto;
-      display: flex; align-items: center; justify-content: center;
-      width: 48px; height: 48px;
-      border: 1px solid var(--gray-100);
-      border-radius: 12px;
-      background: #fff;
-      cursor: pointer;
-      font-size: 20px;
-      color: var(--gray-600);
-      -webkit-tap-highlight-color: transparent;
+    .field input{
+      width:100%;padding:13px 14px;font-size:15px;
+      font-family:inherit;color:#1a1a2e;background:#fff;
+      border:1px solid var(--g100);border-radius:10px;
+      outline:none;transition:border-color 0.15s,box-shadow 0.15s;
+      -webkit-appearance:none;
     }
-    .btn-back:active { background: var(--gray-50); }
-    .btn-next {
-      flex: 1;
-      height: 48px;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      background: var(--purple-600);
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 500;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
+    .field input:focus{border-color:var(--p600);box-shadow:0 0 0 3px var(--p50)}
+    textarea{
+      width:100%;min-height:130px;padding:13px 14px;
+      font-size:15px;font-family:inherit;color:#1a1a2e;
+      background:#fff;border:1px solid var(--g100);
+      border-radius:10px;resize:none;outline:none;
+      transition:border-color 0.15s,box-shadow 0.15s;
+      -webkit-appearance:none;
     }
-    .btn-next:active { background: var(--purple-800); }
-    .btn-next:disabled { background: var(--gray-100); color: var(--gray-400); cursor: not-allowed; }
-    .btn-submit {
-      flex: 1; height: 48px;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      background: var(--purple-600); color: #fff;
-      border: none; border-radius: 12px;
-      font-size: 15px; font-weight: 500;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
+    textarea:focus{border-color:var(--p600);box-shadow:0 0 0 3px var(--p50)}
+
+    .err{font-size:13px;color:#A32D2D;margin-top:10px;display:none}
+    .step-row{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+    .step-pill{font-size:12px;background:var(--p50);color:var(--p800);padding:3px 12px;border-radius:20px;font-weight:500}
+    .step-info{font-size:12px;color:var(--g400)}
+
+    /* Bottom bar */
+    .s-bottombar{
+      position:fixed;bottom:0;left:0;right:0;
+      background:rgba(248,247,255,0.95);
+      backdrop-filter:blur(10px);
+      border-top:1px solid var(--p50);
+      padding:12px 20px;
+      display:flex;gap:10px;
+      max-width:520px;margin:0 auto;
     }
-    .btn-submit:active { background: var(--purple-800); }
-    .btn-submit:disabled { background: var(--gray-100); color: var(--gray-400); }
-
-    /* ── Fields ── */
-    .field { margin-bottom: 18px; }
-    .field label { display: block; font-size: 12px; font-weight: 500; color: var(--purple-600); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 7px; }
-    .field input {
-      width: 100%; padding: 13px 14px; font-size: 15px;
-      font-family: inherit; color: #1a1a2e; background: #fff;
-      border: 1px solid var(--gray-100); border-radius: 10px;
-      outline: none; transition: border-color 0.15s, box-shadow 0.15s;
-      -webkit-appearance: none;
+    .btn-back{
+      flex:0 0 auto;width:48px;height:48px;
+      display:flex;align-items:center;justify-content:center;
+      border:1px solid var(--g100);border-radius:12px;
+      background:#fff;cursor:pointer;font-size:20px;color:var(--g600);
+      -webkit-tap-highlight-color:transparent;
     }
-    .field input:focus { border-color: var(--purple-600); box-shadow: 0 0 0 3px var(--purple-50); }
-
-    /* ── Textarea ── */
-    textarea {
-      width: 100%; min-height: 130px; padding: 13px 14px;
-      font-size: 15px; font-family: inherit; color: #1a1a2e;
-      background: #fff; border: 1px solid var(--gray-100);
-      border-radius: 10px; resize: none; outline: none;
-      transition: border-color 0.15s, box-shadow 0.15s;
-      -webkit-appearance: none;
+    .btn-back:active{background:var(--g50)}
+    .btn-next{
+      flex:1;height:48px;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      background:var(--p600);color:#fff;border:none;border-radius:12px;
+      font-size:15px;font-weight:500;cursor:pointer;
+      -webkit-tap-highlight-color:transparent;transition:background 0.15s;
     }
-    textarea:focus { border-color: var(--purple-600); box-shadow: 0 0 0 3px var(--purple-50); }
-
-    /* ── Result ── */
-    .result-icon {
-      width: 64px; height: 64px; border-radius: 50%;
-      background: var(--purple-50);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 28px; color: var(--purple-600);
-      margin: 0 auto 16px;
+    .btn-next:hover{background:var(--p800)}
+    .btn-next:active{transform:scale(0.98)}
+    .btn-submit{
+      flex:1;height:48px;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      background:var(--p600);color:#fff;border:none;border-radius:12px;
+      font-size:15px;font-weight:500;cursor:pointer;
+      -webkit-tap-highlight-color:transparent;transition:background 0.15s;
     }
-    .result-title { font-size: 20px; font-weight: 500; text-align: center; margin-bottom: 6px; }
-    .result-sub   { font-size: 14px; color: var(--gray-400); text-align: center; margin-bottom: 20px; line-height: 1.5; }
+    .btn-submit:hover{background:var(--p800)}
 
-    .id-chip {
-      background: var(--purple-50); color: var(--purple-800);
-      border-radius: 10px; padding: 10px 14px; font-size: 14px;
-      margin-bottom: 16px;
+    /* Result */
+    .result-wrap{text-align:center;padding-top:8px}
+    .result-icon{
+      width:64px;height:64px;border-radius:50%;
+      background:var(--p50);display:flex;align-items:center;justify-content:center;
+      font-size:28px;color:var(--p600);margin:0 auto 16px;
     }
-
-    .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
-    .stat-card { background: #fff; border: 1px solid var(--gray-100); border-radius: 10px; padding: 12px; }
-    .stat-card .slabel { font-size: 11px; color: var(--gray-400); margin-bottom: 3px; }
-    .stat-card .sval { font-size: 22px; font-weight: 500; }
-    .stat-card .ssub { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
-
-    .bar-section { margin-bottom: 16px; }
-    .bar-section h3 { font-size: 12px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
-    .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
-    .bar-label { font-size: 12px; color: #555; width: 100px; flex-shrink: 0; line-height: 1.3; }
-    .bar-track { flex: 1; height: 6px; background: var(--gray-50); border-radius: 3px; overflow: hidden; }
-    .bar-fill  { height: 6px; background: var(--purple-600); border-radius: 3px; transition: width 0.5s ease; }
-    .bar-num   { font-size: 12px; font-weight: 500; color: #1a1a2e; width: 16px; text-align: right; }
-
-    .saran-box { background: #fff; border: 1px solid var(--gray-100); border-radius: 10px; padding: 14px; }
-    .saran-box .slabel2 { font-size: 12px; color: var(--gray-400); margin-bottom: 6px; }
-    .saran-box .stext   { font-size: 14px; color: #1a1a2e; line-height: 1.6; }
-
-    .badge-ok  { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--teal-800); background: var(--teal-50); padding: 5px 12px; border-radius: 20px; margin-bottom: 14px; }
-    .badge-err { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--red-800); background: var(--red-50);  padding: 5px 12px; border-radius: 20px; margin-bottom: 14px; }
-
-    /* ── Loading ── */
-    .loading-overlay {
-      position: fixed; inset: 0; background: rgba(245,244,255,0.9);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 14px; z-index: 999;
+    .result-title{font-size:20px;font-weight:500;margin-bottom:6px}
+    .result-sub{font-size:14px;color:var(--g400);margin-bottom:20px;line-height:1.5}
+    .id-chip{
+      background:var(--p50);color:var(--p800);
+      border-radius:10px;padding:10px 14px;font-size:14px;margin-bottom:16px;text-align:left;
     }
-    .spinner {
-      width: 36px; height: 36px; border: 3px solid var(--purple-50);
-      border-top-color: var(--purple-600); border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .loading-text { font-size: 14px; color: var(--purple-600); font-weight: 500; }
+    .stat-grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+    .sc{background:#fff;border:1px solid var(--p50);border-radius:10px;padding:12px}
+    .sc .sl{font-size:11px;color:var(--g400);margin-bottom:3px}
+    .sc .sv{font-size:22px;font-weight:500}
+    .sc .ss{font-size:11px;color:var(--g400);margin-top:2px}
+    .bar-sec{margin-bottom:16px}
+    .bar-sec h3{font-size:12px;color:var(--g400);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px}
+    .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+    .bar-lbl{font-size:12px;color:#555;width:100px;flex-shrink:0;line-height:1.3}
+    .bar-track{flex:1;height:6px;background:var(--g50);border-radius:3px;overflow:hidden}
+    .bar-fill{height:6px;background:var(--p600);border-radius:3px;transition:width 0.5s ease}
+    .bar-num{font-size:12px;font-weight:500;color:#1a1a2e;width:16px;text-align:right}
+    .saran-box{background:#fff;border:1px solid var(--p50);border-radius:10px;padding:14px;text-align:left}
+    .saran-box .sl2{font-size:12px;color:var(--g400);margin-bottom:6px}
+    .saran-box .st{font-size:14px;color:#1a1a2e;line-height:1.6}
+    .badge-ok{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--t800);background:var(--t50);padding:5px 12px;border-radius:20px;margin-bottom:14px}
+    .badge-err{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--r800);background:var(--r50);padding:5px 12px;border-radius:20px;margin-bottom:14px}
 
-    /* ── Step pill ── */
-    .step-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-    .step-pill { font-size: 12px; background: var(--purple-50); color: var(--purple-800); padding: 3px 12px; border-radius: 20px; font-weight: 500; }
-    .step-info { font-size: 12px; color: var(--gray-400); }
+    /* Loading */
+    .loading-overlay{
+      position:fixed;inset:0;background:rgba(248,247,255,0.92);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      gap:14px;z-index:999;
+    }
+    .spinner{
+      width:36px;height:36px;border:3px solid var(--p50);
+      border-top-color:var(--p600);border-radius:50%;
+      animation:spin 0.7s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loading-text{font-size:14px;color:var(--p600);font-weight:500}
   </style>
 </head>
 <body>
 
-<!-- Top sticky bar -->
-<div class="topbar">
-  <div class="topbar-title" id="topbar-title">Survey Kepuasan Organisasi</div>
-  <div class="progress-wrap"><div class="progress-fill" id="pbar" style="width:0%"></div></div>
-  <div class="progress-label" id="pbar-label">Langkah 0 dari 12</div>
+<!-- ═══════════════════════════════════
+     LANDING PAGE
+═══════════════════════════════════ -->
+<div id="landing">
+  <nav>
+    <div class="nav-brand">
+      <div class="nav-logo"><i class="ti ti-clipboard-check" aria-hidden="true"></i></div>
+      <span class="nav-name">SurveyKu</span>
+    </div>
+    <button class="nav-btn" onclick="startSurvey()">
+      Mulai Survey <i class="ti ti-arrow-right" aria-hidden="true"></i>
+    </button>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-badge">
+      <i class="ti ti-shield-check" aria-hidden="true"></i> Platform Survey Organisasi
+    </div>
+    <h1>Suara kamu membangun <span>organisasi</span> yang lebih baik.</h1>
+    <p>Sampaikan penilaian jujurmu atas kinerja organisasi. Cepat, mudah, dan langsung tersampaikan ke pengurus.</p>
+    <button class="hero-cta" onclick="startSurvey()">
+      Mulai Beri Penilaian <i class="ti ti-arrow-right" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="stat-num">10</div>
+      <div class="stat-lbl">Pertanyaan penilaian</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">&lt;2'</div>
+      <div class="stat-lbl">Waktu pengisian</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">1–5</div>
+      <div class="stat-lbl">Skala penilaian</div>
+    </div>
+  </div>
+
+  <div class="features">
+    <h2>Mengapa penilaian kamu penting</h2>
+    <div class="feat-list">
+      <div class="feat-card">
+        <div class="feat-icon"><i class="ti ti-chart-bar" aria-hidden="true"></i></div>
+        <div class="feat-body">
+          <h3>Evaluasi objektif</h3>
+          <p>Hasil digunakan pengurus untuk mengevaluasi dan memperbaiki kinerja organisasi secara nyata.</p>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><i class="ti ti-lock-open" aria-hidden="true"></i></div>
+        <div class="feat-body">
+          <h3>Bebas & aman</h3>
+          <p>Tidak perlu login. Isi survey dengan jujur tanpa khawatir identitasmu tersebar.</p>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><i class="ti ti-message-dots" aria-hidden="true"></i></div>
+        <div class="feat-body">
+          <h3>Kritik &amp; saran langsung</h3>
+          <p>Sampaikan masukan bebas di akhir survey. Setiap kata akan dibaca oleh pengurus.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2026 SurveyKu. Dibuat untuk tugas besar.</footer>
 </div>
 
-<!-- Main scrollable content -->
-<div class="main" id="main"></div>
+<!-- ═══════════════════════════════════
+     SURVEY APP
+═══════════════════════════════════ -->
+<div id="survey-app">
+  <div class="s-topbar">
+    <div class="s-topbar-row">
+      <span class="s-topbar-title" id="s-title">Survey Kepuasan Organisasi</span>
+      <button class="s-close" onclick="closeSurvey()" aria-label="Tutup survey">
+        <i class="ti ti-x" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="prog-wrap"><div class="prog-fill" id="pbar" style="width:0%"></div></div>
+    <div class="prog-lbl" id="prog-lbl">Langkah awal</div>
+  </div>
 
-<!-- Fixed bottom nav -->
-<div class="bottom-bar" id="bottom-bar">
-  <button class="btn-next" style="width:100%" id="btn-start" onclick="submitIdentitas()">
-    Mulai Survey <i class="ti ti-arrow-right" aria-hidden="true"></i>
-  </button>
+  <div class="s-main" id="s-main"></div>
+
+  <div class="s-bottombar" id="s-bottombar"></div>
 </div>
 
 <script>
 /* =======================================================
-   ✏️  KONFIGURASI — ubah bagian ini sesuai kebutuhanmu
+   ✏️  KONFIGURASI — ubah sesuai kebutuhanmu
 ======================================================= */
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4sWAdIOP3rAzvxQKzRx4DAgvFj-mOjSUxZ1d_JrV7cbQjgXjoL8n17sQfHFIYloqP/exec";
-const NAMA_ORGANISASI = "Organisasiku";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby4fEZkNpmRIMuSFcWdEwnTQn9cpHJZ2eDeNyWHcbmszKZB3mvKCADmlRB-xYMozUnw/exec";
+const NAMA_ORGANISASI = "Goviity";
 const PERTANYAAN = [
-  "Organisasi ini memiliki visi dan misi yang jelas dan mudah dipahami.",
-  "Kepemimpinan organisasi berjalan secara efektif dan bertanggung jawab.",
-  "Komunikasi antar anggota dan pengurus berjalan dengan baik.",
-  "Program kerja relevan dan memberikan manfaat nyata bagi anggota.",
-  "Organisasi memberikan kesempatan yang sama bagi setiap anggota untuk berkembang.",
-  "Kegiatan organisasi terlaksana sesuai dengan rencana yang ditetapkan.",
-  "Saya merasa nyaman dan dihargai menjadi bagian dari organisasi ini.",
-  "Fasilitas dan sumber daya yang disediakan sudah memadai.",
-  "Organisasi terbuka terhadap masukan dan kritik dari anggota.",
-  "Saya puas dengan kinerja organisasi secara keseluruhan."
+  "Organisasi mampu menyesuaikan diri dengan perubahan kebijakan yang terjadi.",
+  "Organisasi mampu mengubah proses kerja sesuai dengan kebutuhan yang berkembang.",
+  "Pegawai dapat beradaptasi dengan perubahan sistem kerja yang diterapkan.",
+  "Organisasi mampu menghadapi perubahan lingkungan kerja secara fleksibel.",
+  "Organisasi mampu merespons permasalahan yang muncul dengan cepat.",
+  "Pengambilan keputusan dilakukan secara tepat waktu.",
+  "Organisasi mampu memberikan solusi yang cepat terhadap kebutuhan pelayanan.",
+  "Organisasi mampu menindaklanjuti masukan dan keluhan pengguna layanan secara cepat.",
+  "Antarunit kerja melakukan koordinasi yang baik dalam pelaksanaan tugas",
+  "Organisasi mendorong kerja sama antarpegawai dalam menyelesaikan pekerjaan.",
+  "Organisasi menjalin kolaborasi dengan pihak lain untuk meningkatkan kualitas pelayanan",
+  "Organisasi memanfaatkan teknologi informasi dalam pelaksanaan pekerjaan",
+  "Sistem digital yang digunakan mendukung efektivitas proses kerja",
+  "Pegawai memiliki kemampuan yang memadai dalam menggunakan teknologi digital",
+  "Organisasi mendorong pegawai untuk menghasilkan ide dan inovasi baru.",
+  "Organisasi melakukan evaluasi dan perbaikan proses kerja secara berkala",
+  "Pegawai memperoleh kesempatan untuk meningkatkan kompetensi dan pengetahuan",
+  "Organisasi berfokus pada pencapaian target kinerja yang telah ditetapkan.",
+  "Pelaksanaan pekerjaan diarahkan untuk menghasilkan manfaat yang optimal bagi masyarakat.",
+  "Organisasi melakukan pengukuran dan evaluasi terhadap hasil kerja yang dicapai"
+  
 ];
 const LABEL_SKALA = [
-  "Sangat tidak setuju",
-  "Tidak setuju",
-  "Netral",
-  "Setuju",
-  "Sangat setuju"
+  "Sangat tidak setuju","Tidak setuju","Netral","Setuju","Sangat setuju"
 ];
 /* ======================================================= */
 
 const N = PERTANYAAN.length;
-const TOTAL = N + 2; // identitas + pertanyaan + saran
+const TOTAL = N + 2;
 const ans = new Array(N).fill(null);
-let cur = 0; // 0=identitas, 1..N=pertanyaan, N+1=saran
-let identitas = { nama: "", nim: "" };
+let cur = 0;
+let identitas = {nama:"",email:""};
 
-function pct() { return Math.round((cur / TOTAL) * 100); }
-
-function updateBar(label) {
-  document.getElementById('pbar').style.width = pct() + '%';
-  document.getElementById('pbar-label').textContent = label || `Langkah ${cur} dari ${TOTAL}`;
+function startSurvey(){
+  document.getElementById('landing').style.opacity='0';
+  setTimeout(()=>{
+    document.getElementById('landing').style.display='none';
+    document.getElementById('survey-app').classList.add('active');
+    renderIdentitas();
+  },250);
 }
 
-function setBottomBar(html) {
-  document.getElementById('bottom-bar').innerHTML = html;
+function closeSurvey(){
+  document.getElementById('survey-app').classList.remove('active');
+  document.getElementById('landing').style.display='block';
+  setTimeout(()=>{document.getElementById('landing').style.opacity='1'},10);
 }
 
-/* ── Identitas ── */
-function renderIdentitas() {
-  updateBar('Langkah awal — isi data diri');
-  document.getElementById('topbar-title').textContent = NAMA_ORGANISASI;
-  document.getElementById('main').innerHTML = `
+function pct(){return Math.round((cur/TOTAL)*100)}
+function updateBar(lbl){
+  document.getElementById('pbar').style.width=pct()+'%';
+  document.getElementById('prog-lbl').textContent=lbl||'Langkah '+cur+' dari '+TOTAL;
+}
+function setBar(html){document.getElementById('s-bottombar').innerHTML=html}
+
+/* Identitas */
+function renderIdentitas(){
+  cur=0;updateBar('Langkah awal — isi data diri');
+  document.getElementById('s-main').innerHTML=`
     <div class="panel">
       <div class="step-row"><span class="step-pill">Mulai</span><span class="step-info">isi data dirimu</span></div>
       <div class="q-accent">Hi!</div>
-      <div class="q-text" style="margin-bottom:24px">Sebelum memulai, lengkapi data dirimu ya.</div>
+      <div class="q-text">Sebelum mulai, lengkapi data dirimu ya.</div>
       <div class="field">
         <label>Nama Lengkap</label>
-        <input type="text" id="inp-nama" placeholder="Nama lengkapmu" value="${identitas.nama}" />
+        <input type="text" id="inp-nama" placeholder="Nama lengkapmu" value="${identitas.nama}"/>
       </div>
       <div class="field">
-        <label>NIM</label>
-        <input type="text" id="inp-nim" inputmode="numeric" placeholder="NIM kamu" value="${identitas.nim}" />
+        <label>Email</label>
+        <input type="text" id="inp-email" type="email" placeholder="Email kamu" value="${identitas.email}"/>
       </div>
-      <div class="err" id="err-id">Nama dan NIM wajib diisi.</div>
+      <div class="err" id="err-id">Nama dan Email wajib diisi.</div>
     </div>`;
-  setBottomBar(`
-    <button class="btn-next" style="width:100%" onclick="submitIdentitas()">
-      Mulai Survey <i class="ti ti-arrow-right" aria-hidden="true"></i>
-    </button>`);
+  window.scrollTo({top:0,behavior:'smooth'});
+  setBar(`<button class="btn-next" style="width:100%" onclick="submitId()">Mulai Survey <i class="ti ti-arrow-right" aria-hidden="true"></i></button>`);
 }
 
-function submitIdentitas() {
-  const nama = document.getElementById('inp-nama').value.trim();
-  const nim  = document.getElementById('inp-nim').value.trim();
-  if (!nama || !nim) { document.getElementById('err-id').style.display = 'block'; return; }
-  identitas = { nama, nim };
-  cur = 1;
-  renderQ(0);
+function submitId(){
+  const nama=document.getElementById('inp-nama').value.trim();
+  const email=document.getElementById('inp-email').value.trim();
+  if(!nama||!email){document.getElementById('err-id').style.display='block';return;}
+  identitas={nama,email};cur=1;renderQ(0);
 }
 
-/* ── Pertanyaan ── */
-function renderQ(i) {
-  updateBar(`Pertanyaan ${i+1} dari ${N}`);
-  document.getElementById('topbar-title').textContent = NAMA_ORGANISASI;
-  const num = String(i + 1).padStart(2, '0');
-  document.getElementById('main').innerHTML = `
+/* Pertanyaan */
+function renderQ(i){
+  updateBar('Pertanyaan '+(i+1)+' dari '+N);
+  const num=String(i+1).padStart(2,'0');
+  document.getElementById('s-main').innerHTML=`
     <div class="panel">
       <div class="step-row">
         <span class="step-pill">${i+1} / ${N}</span>
@@ -341,7 +496,7 @@ function renderQ(i) {
       <div class="q-accent">${num}</div>
       <div class="q-text">${PERTANYAAN[i]}</div>
       <div class="likert-col">
-        ${[1,2,3,4,5].map(n => `
+        ${[1,2,3,4,5].map(n=>`
           <button class="likert-opt${ans[i]===n?' sel':''}" onclick="pick(${i},${n})" aria-label="${n} - ${LABEL_SKALA[n-1]}">
             <span class="num">${n}</span>
             <span class="lbl">${LABEL_SKALA[n-1]}</span>
@@ -349,144 +504,104 @@ function renderQ(i) {
       </div>
       <div class="err" id="err-q">Pilih salah satu jawaban.</div>
     </div>`;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  setBottomBar(`
-    <button class="btn-back" onclick="goBack(${i})" aria-label="Kembali">
-      <i class="ti ti-arrow-left" aria-hidden="true"></i>
-    </button>
+  window.scrollTo({top:0,behavior:'smooth'});
+  setBar(`
+    <button class="btn-back" onclick="goBack(${i})" aria-label="Kembali"><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
     <button class="btn-next" onclick="goNext(${i})">
-      ${i < N-1 ? 'Lanjut <i class="ti ti-arrow-right" aria-hidden="true"></i>' : 'Ke masukan <i class="ti ti-arrow-right" aria-hidden="true"></i>'}
+      ${i<N-1?'Lanjut <i class="ti ti-arrow-right" aria-hidden="true"></i>':'Ke masukan <i class="ti ti-arrow-right" aria-hidden="true"></i>'}
     </button>`);
 }
 
-function pick(i, v) {
-  ans[i] = v;
-  document.querySelectorAll('.likert-opt').forEach((el, idx) => {
-    el.classList.toggle('sel', idx + 1 === v);
-  });
-  const e = document.getElementById('err-q');
-  if (e) e.style.display = 'none';
+function pick(i,v){
+  ans[i]=v;
+  document.querySelectorAll('.likert-opt').forEach((el,idx)=>el.classList.toggle('sel',idx+1===v));
+  const e=document.getElementById('err-q');if(e)e.style.display='none';
 }
-
-function goNext(i) {
-  if (ans[i] === null) { document.getElementById('err-q').style.display = 'block'; return; }
+function goNext(i){
+  if(ans[i]===null){document.getElementById('err-q').style.display='block';return;}
   cur++;
-  if (i < N - 1) renderQ(i + 1);
-  else renderSaran();
+  if(i<N-1)renderQ(i+1);else renderSaran();
 }
-
-function goBack(i) {
+function goBack(i){
   cur--;
-  if (i === 0) renderIdentitas();
-  else renderQ(i - 1);
+  if(i===0)renderIdentitas();else renderQ(i-1);
 }
 
-/* ── Saran ── */
-function renderSaran() {
+/* Saran */
+function renderSaran(){
   updateBar('Langkah terakhir — kritik & saran');
-  document.getElementById('main').innerHTML = `
+  document.getElementById('s-main').innerHTML=`
     <div class="panel">
       <div class="step-row"><span class="step-pill">Terakhir</span><span class="step-info">kritik &amp; saran</span></div>
       <div class="q-accent">+</div>
-      <div class="q-text">Ada masukan untuk ${NAMA_ORGANISASI}?</div>
-      <textarea id="saran" placeholder="Tulis kritik, saran, atau harapan kamu (opsional)..."></textarea>
+      <div class="q-text">Kritik dan saran untuk ${NAMA_ORGANISASI}?</div>
+      <textarea id="saran" placeholder="Tulis kritik dan saran kamu untuk organisasi (opsional)..."></textarea>
     </div>`;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  setBottomBar(`
-    <button class="btn-back" onclick="backToLastQ()" aria-label="Kembali">
-      <i class="ti ti-arrow-left" aria-hidden="true"></i>
-    </button>
-    <button class="btn-submit" onclick="submitSurvey()">
-      Kirim Survey <i class="ti ti-send" aria-hidden="true"></i>
-    </button>`);
+  window.scrollTo({top:0,behavior:'smooth'});
+  setBar(`
+    <button class="btn-back" onclick="backToLastQ()" aria-label="Kembali"><i class="ti ti-arrow-left" aria-hidden="true"></i></button>
+    <button class="btn-submit" onclick="submitSurvey()">Kirim Survey <i class="ti ti-send" aria-hidden="true"></i></button>`);
 }
+function backToLastQ(){cur--;renderQ(N-1)}
 
-function backToLastQ() {
-  cur--;
-  renderQ(N - 1);
-}
+/* Submit */
+async function submitSurvey(){
+  const saran=document.getElementById('saran').value.trim();
+  const total=ans.reduce((a,b)=>a+b,0);
+  const avg=total/N;
+  let ket='',col='';
+  if(avg>=4.5){ket='Sangat Baik';col='#0F6E56';}
+  else if(avg>=3.5){ket='Baik';col='#3B6D11';}
+  else if(avg>=2.5){ket='Cukup';col='#854F0B';}
+  else{ket='Perlu Perhatian';col='#A32D2D';}
 
-/* ── Submit ── */
-async function submitSurvey() {
-  const saran = document.getElementById('saran').value.trim();
-  const total = ans.reduce((a, b) => a + b, 0);
-  const avg   = total / N;
-  let ket = '', col = '';
-  if      (avg >= 4.5) { ket = 'Sangat Baik';    col = '#0F6E56'; }
-  else if (avg >= 3.5) { ket = 'Baik';            col = '#3B6D11'; }
-  else if (avg >= 2.5) { ket = 'Cukup';           col = '#854F0B'; }
-  else                 { ket = 'Perlu Perhatian'; col = '#A32D2D'; }
+  const payload={nama:identitas.nama,email:identitas.email};
+  ans.forEach((v,i)=>{payload[`p${i+1}`]=v;});
+  payload.rata=avg.toFixed(2);payload.predikat=ket;payload.saran=saran;
 
-  const payload = { nama: identitas.nama, nim: identitas.nim };
-  ans.forEach((v, i) => { payload[`p${i+1}`] = v; });
-  payload.rata = avg.toFixed(2);
-  payload.predikat = ket;
-  payload.saran = saran;
+  const ov=document.createElement('div');
+  ov.className='loading-overlay';
+  ov.innerHTML='<div class="spinner"></div><div class="loading-text">Mengirim data...</div>';
+  document.body.appendChild(ov);
+  setBar('');
 
-  const overlay = document.createElement('div');
-  overlay.className = 'loading-overlay';
-  overlay.innerHTML = `<div class="spinner"></div><div class="loading-text">Mengirim data...</div>`;
-  document.body.appendChild(overlay);
-  setBottomBar('');
+  let ok=false;
+  try{
+    await fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    ok=true;
+  }catch(e){ok=false;}
 
-  let ok = false;
-  try {
-    await fetch(APPS_SCRIPT_URL, {
-      method: 'POST', mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    ok = true;
-  } catch(e) { ok = false; }
+  document.body.removeChild(ov);
+  document.getElementById('pbar').style.width='100%';
+  document.getElementById('prog-lbl').textContent='Selesai!';
 
-  document.body.removeChild(overlay);
-  document.getElementById('pbar').style.width = '100%';
-  document.getElementById('pbar-label').textContent = 'Selesai';
-
-  document.getElementById('main').innerHTML = `
-    <div class="panel" style="text-align:center;padding-top:8px">
+  document.getElementById('s-main').innerHTML=`
+    <div class="panel result-wrap">
       <div class="result-icon"><i class="ti ti-circle-check" aria-hidden="true"></i></div>
       <div class="result-title">Survey terkirim!</div>
       <div class="result-sub">Terima kasih, ${identitas.nama}.<br>Masukanmu sangat berarti untuk ${NAMA_ORGANISASI}.</div>
-      <div style="text-align:center;margin-bottom:16px">
-        ${ok
-          ? `<span class="badge-ok"><i class="ti ti-database" aria-hidden="true"></i> Tersimpan ke Google Sheets</span>`
-          : `<span class="badge-err"><i class="ti ti-alert-triangle" aria-hidden="true"></i> Gagal simpan — cek URL Apps Script</span>`}
+      <div>${ok
+        ?'<span class="badge-ok"><i class="ti ti-database" aria-hidden="true"></i> Tersimpan ke Google Sheets</span>'
+        :'<span class="badge-err"><i class="ti ti-alert-triangle" aria-hidden="true"></i> Gagal simpan — cek URL Apps Script</span>'
+      }</div>
+      <div class="id-chip"><b>${identitas.nama}</b><br>Email ${identitas.email} · ${NAMA_ORGANISASI}</div>
+      <div class="stat-grid2">
+        <div class="sc"><div class="sl">Rata-rata</div><div class="sv" style="color:${col}">${avg.toFixed(2)}</div><div class="ss">dari 5.00</div></div>
+        <div class="sc"><div class="sl">Predikat</div><div class="sv" style="font-size:15px;color:${col}">${ket}</div><div class="ss">&nbsp;</div></div>
       </div>
-      <div class="id-chip">
-        <b>${identitas.nama}</b><br>NIM ${identitas.nim} · ${NAMA_ORGANISASI}
-      </div>
-      <div class="stat-grid">
-        <div class="stat-card">
-          <div class="slabel">Rata-rata</div>
-          <div class="sval" style="color:${col}">${avg.toFixed(2)}</div>
-          <div class="ssub">dari 5.00</div>
-        </div>
-        <div class="stat-card">
-          <div class="slabel">Predikat</div>
-          <div class="sval" style="font-size:15px;color:${col}">${ket}</div>
-          <div class="ssub">&nbsp;</div>
-        </div>
-      </div>
-      <div class="bar-section" style="text-align:left">
+      <div class="bar-sec" style="text-align:left">
         <h3>Rincian per pertanyaan</h3>
         ${ans.map((v,i)=>`
           <div class="bar-row">
-            <div class="bar-label">P${i+1}. ${PERTANYAAN[i].split(' ').slice(0,3).join(' ')}…</div>
+            <div class="bar-lbl">P${i+1}. ${PERTANYAAN[i].split(' ').slice(0,3).join(' ')}…</div>
             <div class="bar-track"><div class="bar-fill" style="width:${(v/5)*100}%"></div></div>
             <div class="bar-num">${v}</div>
           </div>`).join('')}
       </div>
-      ${saran ? `
-      <div class="saran-box" style="text-align:left">
-        <div class="slabel2"><i class="ti ti-message" style="font-size:13px;vertical-align:-1px;margin-right:4px" aria-hidden="true"></i>Masukan kamu</div>
-        <div class="stext">${saran}</div>
-      </div>` : ''}
+      ${saran?`<div class="saran-box"><div class="sl2"><i class="ti ti-message" style="font-size:13px;vertical-align:-1px;margin-right:4px" aria-hidden="true"></i>Kritik &amp; Saran</div><div class="st">${saran}</div></div>`:''}
     </div>`;
-  setBottomBar('');
+  setBar(`<button class="btn-next" style="width:100%" onclick="closeSurvey()"><i class="ti ti-home" aria-hidden="true"></i> Kembali ke Beranda</button>`);
 }
-
-renderIdentitas();
 </script>
 </body>
 </html>
